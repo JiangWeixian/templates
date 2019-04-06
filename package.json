@@ -1,0 +1,34 @@
+{
+  "name": "docs-templates",
+  "version": "1.0.0",
+  "description": "vuepress template",
+  "main": "docs/index.ts",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/lodash": "^4.14.123",
+    "@types/node": "^11.13.0",
+    "lodash": "^4.17.11",
+    "tsconfig-paths": "^3.8.0",
+    "typescript": "^3.4.1",
+    "vuepress": "^0.14.10"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "tsc -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JiangWeixian/templates.git"
+  },
+  "keywords": [
+    "doc",
+    "vuepress",
+    "template"
+  ],
+  "author": "JW",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JiangWeixian/templates/issues"
+  },
+  "homepage": "https://github.com/JiangWeixian/templates#readme"
+}
