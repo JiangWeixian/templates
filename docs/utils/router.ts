@@ -1,7 +1,8 @@
-import { BASE } from '@/constants/project.constants'
+import { BASE } from '../constants/project.constants'
 import { extname, basename } from 'path'
 import isObject from 'lodash/isObject'
 import isString from 'lodash/isString'
+import isEmpty from 'lodash/isEmpty'
 import FolderGenerator, { Folder } from './folder'
 
 export const createRouterUrl = (url: string) => {
@@ -28,13 +29,15 @@ class RouterGenerator extends FolderGenerator {
     return this.isRoute(fileName) && basename(fileName).toLowerCase() === 'readme.md'
   }
   protected getNormalRoute = (route: string) => {
-    return route.replace(/(.)\.md/i, (match, a, b) => {
-      console.log(match, a, b)
-      return match
+    return route.replace(/\/([\S\s\/]+)\.md/ig, (_, p1) => {
+      return p1
     })
   }
   protected getIndexRoute = (route: string) => {
-    return route.replace(/\/readme\.md/i, '')
+    return route.replace(/([\S\s]*)\/readme\.md/i, (match, p1: string,) => {
+      const _p1 = p1.startsWith('/') ? p1.slice(1) : p1
+      return p1 ? _p1 : ''
+    })
   }
   protected getChildRoutes = (folder: Folder, absPath: string): string[] => {
     let childRoutes: string[] = []
@@ -43,7 +46,7 @@ class RouterGenerator extends FolderGenerator {
       relPath = this.abs2rel(folder, absPath)
       if (this.isIndexRoute(relPath)) {
         childRoutes.push(this.getIndexRoute(relPath))
-      } else {
+      } else if (this.isRoute(relPath)) {
         childRoutes.push(this.getNormalRoute(relPath))
       }
     } else {
@@ -53,9 +56,12 @@ class RouterGenerator extends FolderGenerator {
         childRoutes = childRoutes.concat(this.getChildRoutes(v, absPath))
       })
     }
-    return childRoutes
+    return childRoutes.sort()
   }
-  getRoutes = (): Routes => {
+  getRoutes = (force: boolean = false): Routes => {
+    if (!isEmpty(this.routes) && !force) {
+      return this.routes
+    }
     const folders = this.getFolders()
     const routes: Routes = {}
     folders.forEach(f => {
@@ -64,15 +70,15 @@ class RouterGenerator extends FolderGenerator {
         // do nothing
       } else {
         const key = Object.keys(f)[0]
-        const firstLevelRoute = this.abs2rel(key)
+        const firstLevelRoute = createRouterUrl(this.abs2rel(key, this.folderPath + '/'))
         routes[firstLevelRoute] = this.getChildRoutes(f, key)
       }
     })
+    this.routes = routes
     return routes
   }
 }
 
-// export default RouterGenerator
-
-const r = new RouterGenerator()
-console.log(r.getRoutes())
+const Generator = new RouterGenerator()
+Generator.getRoutes()
+export default Generator

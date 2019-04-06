@@ -16,10 +16,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var project_constants_1 = require("@/constants/project.constants");
+var project_constants_1 = require("../constants/project.constants");
 var path_1 = require("path");
 var isObject_1 = __importDefault(require("lodash/isObject"));
 var isString_1 = __importDefault(require("lodash/isString"));
+var isEmpty_1 = __importDefault(require("lodash/isEmpty"));
 var folder_1 = __importDefault(require("./folder"));
 exports.createRouterUrl = function (url) {
     return "" + project_constants_1.BASE + url + "/";
@@ -46,13 +47,15 @@ var RouterGenerator = /** @class */ (function (_super) {
             return _this.isRoute(fileName) && path_1.basename(fileName).toLowerCase() === 'readme.md';
         };
         _this.getNormalRoute = function (route) {
-            return route.replace(/(.)\.md/i, function (match, a, b) {
-                console.log(match, a, b);
-                return match;
+            return route.replace(/\/([\S\s\/]+)\.md/ig, function (_, p1) {
+                return p1;
             });
         };
         _this.getIndexRoute = function (route) {
-            return route.replace(/\/readme\.md/i, '');
+            return route.replace(/([\S\s]*)\/readme\.md/i, function (match, p1) {
+                var _p1 = p1.startsWith('/') ? p1.slice(1) : p1;
+                return p1 ? _p1 : '';
+            });
         };
         _this.getChildRoutes = function (folder, absPath) {
             var childRoutes = [];
@@ -62,7 +65,7 @@ var RouterGenerator = /** @class */ (function (_super) {
                 if (_this.isIndexRoute(relPath)) {
                     childRoutes.push(_this.getIndexRoute(relPath));
                 }
-                else {
+                else if (_this.isRoute(relPath)) {
                     childRoutes.push(_this.getNormalRoute(relPath));
                 }
             }
@@ -73,9 +76,13 @@ var RouterGenerator = /** @class */ (function (_super) {
                     childRoutes = childRoutes.concat(_this.getChildRoutes(v, absPath));
                 });
             }
-            return childRoutes;
+            return childRoutes.sort();
         };
-        _this.getRoutes = function () {
+        _this.getRoutes = function (force) {
+            if (force === void 0) { force = false; }
+            if (!isEmpty_1.default(_this.routes) && !force) {
+                return _this.routes;
+            }
             var folders = _this.getFolders();
             var routes = {};
             folders.forEach(function (f) {
@@ -85,16 +92,17 @@ var RouterGenerator = /** @class */ (function (_super) {
                 }
                 else {
                     var key = Object.keys(f)[0];
-                    var firstLevelRoute = _this.abs2rel(key);
+                    var firstLevelRoute = exports.createRouterUrl(_this.abs2rel(key, _this.folderPath + '/'));
                     routes[firstLevelRoute] = _this.getChildRoutes(f, key);
                 }
             });
+            _this.routes = routes;
             return routes;
         };
         return _this;
     }
     return RouterGenerator;
 }(folder_1.default));
-// export default RouterGenerator
-var r = new RouterGenerator();
-console.log(r.getRoutes());
+var Generator = new RouterGenerator();
+Generator.getRoutes();
+exports.default = Generator;

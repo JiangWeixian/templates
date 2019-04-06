@@ -6,5 +6,6 @@ exports.ignoreFolders = [
     'utils',
     'config',
     'constants',
+    'img',
     '.vuepress'
 ];

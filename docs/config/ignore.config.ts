@@ -4,5 +4,6 @@ export const ignoreFolders = [
   'utils',
   'config',
   'constants',
+  'img',
   '.vuepress'
 ]

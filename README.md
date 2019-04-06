@@ -1,17 +1,29 @@
-# react-template
-> 己用`react-template`
+# doc - template
 
-## React
+## rules
 
-* [React-state-route-ts](https://github.com/JiangWeixian/LearningWebpack/tree/react-router-state-ts)
-  * jest + enzyme
-  * stylus / css-modules
-  * rematch / redux-dev-tools
-  * react-css-translation
-  * typescript
-  * router
-* [React-simple-ts](https://github.com/JiangWeixian/LearningWebpack/tree/react-simple-TS) / only react with typescript
+**DO NOT**
 
-## TODO
+```bash
+/docs
+  /a
+  a.md
+  b.md
+```
 
-* [ ] - react-cli / 某种原因，暂时好像没有必要实现这个功能。**看心情**
+**DO NOT**
+
+```bash
+/docs
+  /a
+    README.md // wrong
+    a.md // right
+```
+
+**DO NOT**
+
+```
+/docs
+  /中文 // just eng
+    /中文 or 英文 // all is ok
+```

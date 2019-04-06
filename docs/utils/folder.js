@@ -13,8 +13,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Generate folders in docs
  */
-var ignore_config_1 = require("@/config/ignore.config");
-var docs_config_1 = require("@/config/docs.config");
+var ignore_config_1 = require("../config/ignore.config");
+var docs_config_1 = require("../config/docs.config");
 var isEmpty_1 = __importDefault(require("lodash/isEmpty"));
 var fs = __importStar(require("fs"));
 var DEFAULT_SUPPORT_LEVEL = 1;

@@ -1,8 +1,8 @@
 /**
  * Generate folders in docs
  */
-import { ignoreFolders as DEFAULT_IGNORE_FOLDERS } from '@/config/ignore.config'
-import { rootPath as DEFAULT_ROOT_PATH } from '@/config/docs.config'
+import { ignoreFolders as DEFAULT_IGNORE_FOLDERS } from '../config/ignore.config'
+import { rootPath as DEFAULT_ROOT_PATH } from '../config/docs.config'
 import isEmpty from 'lodash/isEmpty'
 import * as fs from 'fs'
 
