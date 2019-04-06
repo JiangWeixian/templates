@@ -71,7 +71,10 @@ class RouterGenerator extends FolderGenerator {
       } else {
         const key = Object.keys(f)[0]
         const firstLevelRoute = createRouterUrl(this.abs2rel(key, this.folderPath + '/'))
-        routes[firstLevelRoute] = this.getChildRoutes(f, key)
+        const childrenRoutes = this.getChildRoutes(f, key)
+        if (!isEmpty(childrenRoutes)) {
+          routes[firstLevelRoute] = childrenRoutes
+        }
       }
     })
     this.routes = routes
