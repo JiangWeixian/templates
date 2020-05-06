@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { NextPageContext } from 'next'
 
-import { User } from '~/interfaces'
+import { Users } from '~/interfaces'
 import Layout from '~/components/Layout'
 import ListDetail from '~/components/ListDetail'
-import { api } from '~/api'
+import { api } from '~/api/client'
 
 type Props = {
-  item?: User
+  item?: Users.Item
   errors?: string
 }
 
@@ -15,7 +15,7 @@ class InitialPropsDetail extends React.Component<Props> {
   static getInitialProps = async ({ query }: NextPageContext) => {
     try {
       const { id } = query
-      const item = await api.users.getUser(id as string)
+      const item = await api.client.users.getUser(id as string)
       return { item }
     } catch (err) {
       return { errors: err.message }

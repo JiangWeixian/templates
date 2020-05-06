@@ -4,7 +4,8 @@ import Link from 'next/link'
 import Layout from '~/components/Layout'
 import List from '~/components/List'
 import styles from './User.module.styl'
-import { api, Users } from '~/api'
+import { api } from '~/api/client'
+import { Users } from '~/interfaces'
 
 type Props = {
   items: Users.Item[]
@@ -33,7 +34,7 @@ WithInitialProps.getInitialProps = async ({ pathname }) => {
   // Example for including initial props in a Next.js function component page.
   // Don't forget to include the respective types for any props passed into
   // the component.
-  const items: Users.Item[] = await api.users.list()
+  const items: Users.Item[] = await api.client.users.list()
   return { items, pathname }
 }
 

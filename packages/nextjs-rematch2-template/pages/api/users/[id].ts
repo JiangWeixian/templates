@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { api } from '~/api'
+import { api } from '~/api/server'
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query
-    const selected = api.users.getUser(id as string)
+    const selected = api.server.users.getUser(id as string)
 
     res.status(200).json(selected)
   } catch (err) {
