@@ -5,10 +5,12 @@
   "main": "index.js",
   "devDependencies": {
     "@aiou/eslint-config": "0.0.10",
+    "cz-cli": "^1.0.0",
     "eslint": "^7.18.0",
     "fs-extra": "^8.1.0",
     "husky": "^3.0.1",
     "lerna": "^3.13.4",
+    "lerna-update-wizard": "^0.17.8",
     "np": "^5.0.1",
     "npm-check-updates": "^11.5.1",
     "prettier": "^2.2.1",
@@ -20,7 +22,7 @@
     "sync": "node scripts/sync.js",
     "start": "lerna bootstrap --hoist --nohoist=husky",
     "check": "lerna run check",
-    "ncu": "ncu pretty-quick --packageFile 'packages/**/package.json'",
+    "update": "lernaupdate",
     "publish": "lerna publish --ignore-scripts --yes",
     "upgrade:react": "cd packages/react-templates && ncu --configFilePath ./.ncurc.json",
     "upgrade:docs": "cd packages/docs-templates && ncu --configFilePath ./.ncurc.json",
@@ -47,6 +49,11 @@
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-emoji"
     }
   }
 }
