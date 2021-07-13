@@ -21,9 +21,15 @@
     "check": "lerna run check",
     "ncu": "ncu pretty-quick --packageFile 'packages/**/package.json'",
     "publish": "lerna publish --ignore-scripts --yes",
-    "upgrade:react": "cd packages/react-templates && ncu --configFilePath ./.ncurc.json",
-    "upgrade:docs": "cd packages/docs-templates && ncu --configFilePath ./.ncurc.json",
-    "upgrade:rollup": "cd packages/rollup-templates && ncu --configFilePath ./.ncurc.json",
+    "upgrade:webpack": "cd packages/webpack-loader-template && ncu --configFilePath ./.ncurc.json",
+    "upgrade:eslint": "cd packages/eslint-config-template && ncu --configFilePath ./.ncurc.json",
+    "upgrade:dayjs": "cd packages/dayjs-plugin-template && ncu --configFilePath ./.ncurc.json",
+    "upgrade:react": "cd packages/react-template && ncu --configFilePath ./.ncurc.json",
+    "upgrade:crx": "cd packages/chrome-extenstion-template && ncu --configFilePath ./.ncurc.json",
+    "upgrade:original": "cd packages/original-html-template && ncu --configFilePath ./.ncurc.json",
+    "upgrade:tslib": "cd packages/ts-lib-template && ncu --configFilePath ./.ncurc.json",
+    "upgrade:docs": "cd packages/docs-template && ncu --configFilePath ./.ncurc.json",
+    "upgrade:rollup": "cd packages/rollup-template && ncu --configFilePath ./.ncurc.json",
     "prettier": "prettier --config .prettierrc --write '**/*'"
   },
   "repository": {
